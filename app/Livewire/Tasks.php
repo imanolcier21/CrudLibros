@@ -8,74 +8,87 @@ use App\Models\Book;
 
 class Tasks extends Component
 {
-    public $TaskName;
-    public $TaskId;
+    
+    public $taskName;
     public $bookId;
+    public $taskId;
 
+    
     public $showForm = false;
 
+    
     protected $rules = [
-        'TaskName' => 'required|string|max:255',
+        'taskName' => 'required|string|max:255',
         'bookId' => 'required|integer',
     ];
 
     public function render()
     {
-        $Tasks = Task::all();
+        
+        $tasks = Task::all();
         $books = Book::all();
+
         return view('livewire.tasks', [
-            'Tasks' => $Tasks,
+            'tasks' => $tasks,
             'books' => $books,
         ]);
     }
 
+    
     public function create()
     {
         $this->resetInput();
         $this->showForm = true;
     }
 
+    // Método para guardar una nueva tarea o actualizar una existente
     public function save()
     {
         $this->validate();
 
-        if ($this->TaskId){
-            $Task = Task::find($this->TaskId);
-            $Task->update([
-                'TaskName' => $this->TaskName,
+        
+        if ($this->taskId) {
+            $task = Task::find($this->taskId);
+            $task->update([
+                'TaskName' => $this->taskName,
                 'BookID' => $this->bookId,
             ]);
-            session()->flash('message', 'Tarea actualizada con éxito');
-        }else{
+            session()->flash('message', 'Tarea actualizada exitosamente.');
+        } else {
+            // No existe taskId, estamos creando una nueva tarea
             Task::create([
-                'TaskName' => $this->TaskName,
+                'TaskName' => $this->taskName,
                 'BookID' => $this->bookId,
             ]);
-            session()->flash('message', 'Tarea creada con éxito');
+            session()->flash('message', 'Tarea creada exitosamente.');
         }
+
         $this->showForm = false;
         $this->resetInput();
     }
 
-    public function edit($TaskId)
+    // Método para editar una tarea
+    public function edit($id)
     {
-        $Task = Task::find($TaskId);
-        $this->TaskId = $Task->TaskId;
-        $this->TaskName = $Task->TaskName;
-        $this->bookId = $Task->BookID;
+        $task = Task::find($id);
+        $this->taskId = $task->TaskID;
+        $this->taskName = $task->TaskName;
+        $this->bookId = $task->BookID;
         $this->showForm = true;
     }
 
-    public function delete($TaskId)
+    // Método para eliminar una tarea
+    public function delete($id)
     {
-        Task::find($TaskId)->delete();
-        session()->flash('message', 'Tarea eliminada con éxito');
+        Task::find($id)->delete();
+        session()->flash('message', 'Tarea eliminada exitosamente.');
     }
 
+    
     public function resetInput()
     {
-        $this->TaskName = '';
-        $this->TaskId = null;
+        $this->taskId = null;
+        $this->taskName = '';
         $this->bookId = null;
         $this->showForm = false;
     }
