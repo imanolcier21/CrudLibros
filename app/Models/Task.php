@@ -9,4 +9,9 @@ class Task extends Model
 {
     /** @use HasFactory<\Database\Factories\TaskFactory> */
     use HasFactory;
+
+    public function book()
+    {
+        return $this->belongsTo(Book::class, 'BookID');
+    }
 }
