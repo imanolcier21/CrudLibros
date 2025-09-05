@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id('BookID');
             $table->string('Title');
-            $table->foreignId('UserId')->references('UserID')->on('users');
+            $table->foreignId('UserID')->references('UserID')->on('users'); // Changed from userID to UserID
             $table->timestamps();
         });
     }
