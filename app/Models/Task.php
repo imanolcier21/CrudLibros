@@ -10,8 +10,12 @@ class Task extends Model
     /** @use HasFactory<\Database\Factories\TaskFactory> */
     use HasFactory;
 
+    protected $primaryKey = 'TaskId';
+    protected $fillable = ['Title', 'BookID'];
+
     public function book()
     {
+
         return $this->belongsTo(Book::class, 'BookID');
     }
 }
