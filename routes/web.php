@@ -13,7 +13,12 @@ Route::view('dashboard', 'dashboard')
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
-route::get('/books', Books::class)->name('books.index');
+
+Route::middleware(['auth'])->group(function () {
+    // Esta es la forma correcta de apuntar a un componente de Livewire
+    Route::get('/books', Books::class)->name('books.index');
+});
+
 route::get('/tasks', Tasks::class)->name('tasks.index');
 
 

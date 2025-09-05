@@ -4,19 +4,20 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Book;
+use Illuminate\Support\Facades\Auth;
 
 class Books extends Component
 {
-    // Propiedades del formulario
-    public $title;
+    
+    public $Title;
     public $bookId;
 
-    // Propiedad para mostrar/ocultar el modal de edición
+    
     public $showForm = false;
 
-    // Reglas de validación
+    
     protected $rules = [
-        'title' => 'required|string|max:255',
+        'Title' => 'required|string|max:255',
     ];
 
     public function render()
@@ -26,7 +27,7 @@ class Books extends Component
         return view('livewire.books', ['books' => $books]);
     }
 
-    // Método para abrir el formulario de creación
+    
     public function create()
     {
         $this->resetInput();
@@ -36,21 +37,17 @@ class Books extends Component
     // Método para guardar un nuevo libro o actualizar uno existente
     public function save()
     {
-        $this->validate();
+        $validatedData = $this->validate();
 
-        // Si existe bookId, estamos actualizando
+        
         if ($this->bookId) {
             $book = Book::find($this->bookId);
-            $book->update([
-                'title' => $this->title,
-            ]);
+            $book->update($validatedData);
             session()->flash('message', 'Libro actualizado exitosamente.');
         } else {
-            // No existe bookId, estamos creando uno nuevo
             Book::create([
-                'title' => $this->title,
-                // Asignar un UserID. Aquí podrías usar el ID del usuario autenticado.
-                'UserID' => 1, // Cambia esto para usar Auth::id() en una aplicación real
+                'Title' => $validatedData['Title'],
+                'UserID' => Auth::id(),
             ]);
             session()->flash('message', 'Libro creado exitosamente.');
         }
@@ -64,7 +61,7 @@ class Books extends Component
     {
         $book = Book::find($id);
         $this->bookId = $book->BookID;
-        $this->title = $book->Title;
+        $this->Title = $book->Title;
         $this->showForm = true;
     }
 
@@ -79,7 +76,7 @@ class Books extends Component
     public function resetInput()
     {
         $this->bookId = null;
-        $this->title = '';
+        $this->Title = '';
         $this->showForm = false;
     }
 }
