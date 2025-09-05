@@ -12,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" xintegrity="sha512-iecdLwQ3uT5aKz0VvWqV7wL0A512f45z9V54p9lX0yM0w243k1/W05P5d6t9B7V2k1Lw7+F01zL0P5C0G4V7w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
