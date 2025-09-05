@@ -1,31 +1,28 @@
 <div class="container mx-auto max-w-4xl bg-white rounded-xl shadow-lg p-6">
     <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Gestión de Libros</h1>
 
-    
     @if (session()->has('message'))
     <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md mb-4" role="alert">
         <p>{{ session('message') }}</p>
     </div>
     @endif
 
-    
     <div class="flex justify-end mb-4">
         <button wire:click="create" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-colors duration-200">
             <i class="fas fa-plus mr-2"></i>Añadir Nuevo Libro
         </button>
     </div>
 
-    
     @if ($showForm)
     <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
         <h2 class="text-2xl font-semibold mb-4 text-gray-700">{{ $bookId ? 'Editar Libro' : 'Crear Nuevo Libro' }}</h2>
         <form wire:submit.prevent="save">
             <div class="mb-4">
-                <label for="title" class="block text-gray-700 font-medium mb-2">Título del Libro:</label>
-                <input type="text" id="title" wire:model.defer="title"
+                <label for="Title" class="block text-gray-700 font-medium mb-2">Título del Libro:</label>
+                <input type="text" id="Title" wire:model.defer="Title"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200"
                     placeholder="Ej. El señor de los anillos">
-                @error('title') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                @error('Title') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
             </div>
             <div class="flex items-center justify-end space-x-4">
                 <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-200">
@@ -39,7 +36,6 @@
     </div>
     @endif
 
-    
     <div class="bg-white rounded-lg shadow-md p-4">
         <h2 class="text-2xl font-semibold mb-4 text-gray-700">Libros Disponibles</h2>
         <div class="overflow-x-auto">
@@ -86,5 +82,4 @@
             </table>
         </div>
     </div>
-
 </div>
